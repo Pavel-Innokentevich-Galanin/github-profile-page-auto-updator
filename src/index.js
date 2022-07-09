@@ -36,32 +36,55 @@ async function main() {
     str += `\n## ${key}\n`;
     obj[key].forEach((repos, index) => {
       str += `
-<details><summary><a href="${repos.html_url}">${repos.name}</a></summary>
-    <ul>
-        <li><b>Owner</b>: <a href="https://github.com/${repos.owner.login}">${
+<details>
+  <summary>
+    <table>
+      <tr>
+        <td width="100">More</td>
+        <td width="300">:file_folder: <b>${repos.name}</b></td>
+        <td width="200">${
+          repos.more.license.name !== ""
+            ? `:green_book: ${repos.more.license.name}`
+            : ""
+        }</td>
+        <td width="100">${
+          repos.more.watchers !== 0 ? `:eyes: ${repos.more.watchers}` : ""
+        }</td>
+        <td width="100">${
+          repos.more.stars !== 0 ? `:star: ${repos.more.stars}` : ""
+        }</td>
+        <td width="100">${
+          repos.more.forks !== 0 ? `:electric_plug: ${repos.more.forks}` : ""
+        }</td>
+      </tr>
+    </table>
+  </summary>
+  <ul>
+    <li><b>Url</b>: ${repos.html_url}</li>
+    <li><b>Owner</b>: <a href="https://github.com/${repos.owner.login}">${
         repos.owner.login
       }</a></li>
-        <li><b>Updated at</b>: ${getStringDate(new Date(repos.updated_at))}</li>
-        <li><b>Description</b>: ${repos.more.description}</li>
-        <li><b>License</b>: ${
-          repos.more.license
-            ? `<a href="${repos.more.license.url}">${repos.more.license.name}</a>`
-            : "none"
-        }</li>
-        <li><b>Stars</b>: :star: ${repos.more.stars}</li>
-        <li><b>Watchers</b>: :eyes: ${repos.more.watchers}</li>
-        <li><b>Forks</b>: :electric_plug: ${repos.more.forks}</li>
-        <li><b>Languages</b>: <ul>${repos.languages
-          .map((language_element) => {
-            let procent = parseFloat(
-              (language_element.counter * 100) / language_element.sum
-            ).toFixed(2);
-            procent = procent < 10 ? `0${procent}` : `${procent}`;
-            return `
-            <li>${procent} % - ${language_element.language}</li>`;
-          })
-          .join("")}</ul></li>
-    </ul>
+    <li><b>Updated at</b>: ${getStringDate(new Date(repos.updated_at))}</li>
+    <li><b>Description</b>: ${repos.more.description}</li>
+    <li><b>License</b>: ${
+      repos.more.license.name !== ""
+        ? `<a href="${repos.more.license.url}">${repos.more.license.name}</a>`
+        : "none"
+    }</li>
+    <li><b>Stars</b>: :star: ${repos.more.stars}</li>
+    <li><b>Watchers</b>: :eyes: ${repos.more.watchers}</li>
+    <li><b>Forks</b>: :electric_plug: ${repos.more.forks}</li>
+    <li><b>Languages</b>: <ul>${repos.languages
+      .map((language_element) => {
+        let procent = parseFloat(
+          (language_element.counter * 100) / language_element.sum
+        ).toFixed(2);
+        procent = procent < 10 ? `0${procent}` : `${procent}`;
+        return `
+          <li>${procent} % - ${language_element.language}</li>`;
+      })
+      .join("")}</ul></li>
+  </ul>
 </details>
 `;
     });
