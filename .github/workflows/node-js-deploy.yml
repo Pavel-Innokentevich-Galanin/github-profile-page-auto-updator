@@ -21,5 +21,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: |
+          git config user.name $user_name
+          git config user.email $user_email
           git remote set-url origin https://git:${github_token}@github.com/Pavel-Innokentevich-Galanin/Pavel-Innokentevich-Galanin.git
-          npm run deploy -- -u "${user_name} <${user_email}>"
+          npm run deploy
