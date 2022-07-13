@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "node src/index.js",
-    "deploy": "gh-pages -d build -b gh-pages"
+    "deploy": "gh-pages -d build -b main"
   },
   "dependencies": {
     "axios": "^0.27.2",
