@@ -1,0 +1,23 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm ci
+      - run: npm run build
+      - run: |
+          git remote set-url origin https://git:${github_token}@github.com/Pavel-Innokentevich-Galanin/Pavel-Innokentevich-Galanin.git
+          npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
